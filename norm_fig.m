@@ -55,12 +55,12 @@ peach_pb = ori_data(:, 6:6);
 figure
 subplot(2, 2, 1);
 %histogram(peach_cr, 'BinMethod', 'auto');
-histfit(peach_cr, 10, 'normal', 'FaceColor', 'none');
+histfit(peach_cr, 10, 'normal', 'FaceColor', 'none', 'LineLidth', 2);
 ylabel('Cr frequency');
 xlabel('mg/kg')
 hold on
-mean_cr = mean(peach_cr);
-std_cr = std(peach_cr);
+mean_cr = nanmean(peach_cr);
+std_cr = nanstd(peach_cr);
 plot([mean_cr, mean_cr], ylim, 'k-.', 'LineWidth', 2); % 平均值线
 plot([mean_cr - std_cr, mean_cr - std_cr], ylim, 'g--', 'LineWidth', 2); % 一倍标准偏差线
 plot([mean_cr + std_cr, mean_cr + std_cr], ylim, 'g--', 'LineWidth', 2); % 一倍标准偏差线
@@ -70,7 +70,7 @@ title('peach\_cr Frequency Distribution');
 
 subplot(2, 2, 2);
 %histogram(peach_as, 'BinMethod', 'auto');
-histfit(peach_as, 10, 'normal', 'FaceColor', [0.2 0.8 0.2]);
+histfit(peach_as, 10, 'normal', 'FaceColor', [0.2 0.8 0.2], 'LineLidth', 2);
 ylabel('As frequency');
 xlabel('mg/kg')
 hold on
@@ -85,12 +85,12 @@ title('peach\_as Frequency Distribution');
 
 subplot(2, 2, 3);
 %histogram(peach_cd, 'BinMethod', 'auto');
-histfit(peach_cd, 10, 'normal', 'FaceColor', [0.2 0.2 0.8]);
+histfit(peach_cd, 10, 'normal', 'FaceColor', [0.2 0.2 0.8], 'LineLidth', 2);
 ylabel('Cd frequency');
 xlabel('mg/kg')
 hold on
-mean_cd = mean(peach_cd);
-std_cd = std(peach_cd);
+mean_cd = nanmean(peach_cd);
+std_cd = nanstd(peach_cd);
 plot([mean_cd, mean_cd], ylim, 'k-.', 'LineWidth', 2); % 平均值线
 plot([mean_cd - std_cd, mean_cd - std_cd], ylim, 'g--', 'LineWidth', 2); % 一倍标准偏差线
 plot([mean_cd + std_cd, mean_cd + std_cd], ylim, 'g--', 'LineWidth', 2); % 一倍标准偏差线
@@ -100,12 +100,17 @@ title('peach\_cd Frequency Distribution');
 
 subplot(2, 2, 4);
 %histogram(peach_pb, 'BinMethod', 'auto');
-histfit(peach_pb, 10, 'normal', 'FaceColor', [0.8 0.8 0.2]);
+
+h = histfit(peach_pb, 10, 'normal', 'FaceColor', 'none'); 
+h(1).LineWidth = 2;
+h(1).FaceColor = [0.2 0.2 0.8];
+h(1).EdgeColor = [1 1 1];
+
 ylabel('Pb frequency');
 xlabel('mg/kg')
 hold on
-mean_pb = mean(peach_pb);
-std_pb = std(peach_pb);
+mean_pb = nanmean(peach_pb);
+std_pb = nanstd(peach_pb);
 plot([mean_pb, mean_pb], ylim, 'k-.', 'LineWidth', 2); % 平均值线
 plot([mean_pb - std_pb, mean_pb - std_pb], ylim, 'g--', 'LineWidth', 2); % 一倍标准偏差线
 plot([mean_pb + std_pb, mean_pb + std_pb], ylim, 'g--', 'LineWidth', 2); % 一倍标准偏差线
@@ -124,14 +129,15 @@ title_names = {'Strawberry', 'Peach', 'Grape', 'Pear', 'Tomato', 'Lettuce', 'Cuc
 indicators = {'Cr', 'As', 'Cd', 'Pb'};
 data_columns = [3, 4, 5, 6];
 set(0, 'DefaultAxesFontName', 'Times New Roman','DefaultAxesFontSize', 11, 'DefaultAxesFontWeight', 'bold');
-
+%颜色矩阵
+colors = [[0.00, 0.45, 0.74]; [0.2, 0.8, 0.2]; [0.2, 0.2, 0.8]; [0.8, 0.8, 0.2]]
 % 绘图
 for sheet_idx = 1:length(sheet_names); % 建立sheet列表
     sheet_name_i = sheet_names{sheet_idx}; % sheet列表转换
     ori_data = xlsread('factors_analysis_.xlsx', sheet_name_i); %循环读取xls的sheet
 
     figure;
-
+   
     for k = 1:length(indicators) % 建立画图序列
         subplot(2, 2, k);
 
@@ -140,6 +146,10 @@ for sheet_idx = 1:length(sheet_names); % 建立sheet列表
 
         % 绘制直方图和正态分布曲线
         h = histfit(current_data, 10, 'normal', 'FaceColor', 'none');
+        h(1).LineWidth = 2;
+        h(1).FaceColor = colors(k, :);
+        h(1).EdgeColor = [1 1 1];
+  
         ylabel([indicators{k}, ' frequency/', ' %']);
         xlabel('mg/kg');
 
