@@ -38,7 +38,7 @@ legend([Hdl1.F_legend,Hdl2.F_legend],{'randn+sin(x)','randn+cos(x)'});
 set(gca,'AmbientLightColor',[0 0 0],'GridColor',[0 0 0],'Layer','top','box','on'); % 设置图框样式
 
 
-%% 姚老师数据图_正态分布图
+%% 数据图_正态分布图
 clc;clear
 
 sheet_names = {'strawberry-88', 'peach-89', 'grape-84', 'pear-85', 'tomato-90', 'lettuce-101', 'cucumber-100', 'crowndaisy-100'};
@@ -113,7 +113,7 @@ plot([mean_pb + std_pb, mean_pb + std_pb], ylim, 'g--', 'LineWidth', 2); % 一�
 xlim([0, max(peach_pb)]);
 title('peach\_pb Frequency Distribution');
 
-%% 姚老师数据图_for循环简化代码
+%% 数据图_for循环简化代码
 %
 clc;clear
 
