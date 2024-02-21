@@ -147,7 +147,7 @@ for sheet_idx = 1:length(sheet_names); % 建立sheet列表
         % 绘制直方图和正态分布曲线
         h = histfit(current_data, 10, 'normal', 'FaceColor', 'none');
         h(1).LineWidth = 2;
-        h(1).FaceColor = colors(k, :);
+        h(1).FaceColor = colors(k, :); %多颜色绘制
         h(1).EdgeColor = [1 1 1];
   
         ylabel([indicators{k}, ' frequency/', ' %']);
